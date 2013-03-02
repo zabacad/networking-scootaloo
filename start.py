@@ -1,6 +1,7 @@
 #!/user/bin/env python
 
 
+import random
 import sys
 import Server
 import Client
@@ -11,7 +12,9 @@ def start_server(port):
 
 
 def start_client(port):
-	client = Client.Client(port)
+	chars = ["o", "+", ".", "=", "#", "&"]
+	char = chars[floor(random.random * len(chars))]
+	client = Client.Client(port, char)
 
 
 if __name__ == '__main__':
