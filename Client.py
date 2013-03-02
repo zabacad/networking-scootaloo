@@ -5,7 +5,7 @@ class Client:
 	"""Client."""
 
 	def __init__(self, port, char):
-		self.addr = ('', port)
+		self.addr = ("localhost", port)
 		self.s = socket.socket()
 		self.s.connect(self.addr)
 
