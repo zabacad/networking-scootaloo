@@ -4,7 +4,7 @@ class World:
 	def __init__(self, width, height):
 		self.width = width
 		self.height = height
-		self.world = [[" " for x in xrange(x)] for y in xrange(y)]
+		self.world = [[" " for x in xrange(self.width)] for y in xrange(self.height)]
 
 	def __del__(self):
 		pass
