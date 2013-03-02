@@ -16,9 +16,8 @@ class Client:
 	def __del__(self):
 		self.s.close()
 
-	def send_move(self, x, y):
-		self.s.send(x + "," + y)
-		
 	def scan(self):
-		while 1:
-			self.s.send(input())
+		pass
+
+	def send(self, message):
+		self.s.send(message)

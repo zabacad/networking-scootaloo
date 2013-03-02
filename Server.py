@@ -22,7 +22,7 @@ class Server:
 				pass
 
 			for conn in self.connections:
-				conn_sock = conn(0)
+				conn_sock = conn[0]
 				try:
 					data = conn_sock.recv(1024)
 					print data
