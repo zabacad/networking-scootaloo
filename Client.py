@@ -1,11 +1,18 @@
+import socket
 
 
 class Client:
 	"""Client."""
+	
+	def __init__(self, port, char):
+		self.addr = ('', port)
+		self.s = socket.socket()
+		self.s.connect(self.addr)
 
-	def __init__(self, server, char):
-		self.server = server
 		self.char = char
-
+		
 	def __del__(self):
-		pass
+		self.s.close()
+		
+	def send_move(self, x, y):
+		self.s.send("Move")
