@@ -20,7 +20,7 @@ class Client:
 				data = self.s.recv(1024)
 				items = data.split(",")
 				if items[0] == "INIT":
-					self.set_width_height(items[1], items[2])
+					self.init_world(int(items[1]), int(items[2]))
 					self.set_char(items[3])
 					print "Initialized!"
 				else:
@@ -32,15 +32,8 @@ class Client:
 	def send(self, message):
 		self.s.send(message)
 
-	def set_width_height(self, w, h):
-		self.width = w
-		self.height = h
-
-	def get_width(self):
-		return self.width
-
-	def get_height(self):
-		return self.height
+	def init_world(self, width, height):
+		self.world = World.World(width, height)
 
 	def set_char(self, char):
 		self.char = char
