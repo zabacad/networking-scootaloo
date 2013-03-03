@@ -15,9 +15,11 @@ def start_server(port):
 	del server
 
 
-def start_client(address):
-	print "Starting client. Connecting to " + str(address) + "."
-	#client = Client.Client(address)
+def start_client(host, port):
+	print "Starting client. Connecting to " + str(host) + ":" + str(port) + "."
+	client = Client.Client(host, port)
+	print "Stopped client."
+	del client
 
 
 def print_usage():
@@ -44,12 +46,12 @@ if __name__ == '__main__':
 			port = int(sys.argv[2])
 			start_server(port)
 	elif action == "client":
-		if len(sys.argv < 4):
+		if len(sys.argv) < 4:
 			print "No host or port given"
 			action = "usage"
 		else:
 			host = sys.argv[2]
 			port = int(sys.argv[3])
-			start_client((host, port))
+			start_client(host, port)
 	if action == "usage":
 		print_usage()

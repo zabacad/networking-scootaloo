@@ -25,3 +25,6 @@ class World:
 
 	def reset(self, x, y):
 		self.set(x, y, " ")
+
+	def get_width_height(self):
+		return (self.width, self.height)

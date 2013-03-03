@@ -17,7 +17,8 @@ class Server:
 
 	def __del__(self):
 		for conn in self.connections:
-			conn.close()
+			conn_sock = conn[0]
+			conn_sock.close()
 			"Closed connection (server stop)"
 
 	def serve(self):
@@ -29,7 +30,7 @@ class Server:
 					conn = self.s.accept()
 					self.connections.append(conn)
 					print "Opened connection"
-					char = self.chars[len(self.connections - 1)]
+					char = self.chars[len(self.connections) - 1]
 					self.init_client(conn, char)
 				except socket.error:
 					pass
@@ -49,10 +50,15 @@ class Server:
 			except KeyboardInterrupt:
 				running = False
 		for conn in self.connections:
-			conn.close()
-			"Closed connection (server stop)"
+			conn_sock = conn[0]
+			conn_sock.close()
+			print "Closed connection (server stop)"
 
-	def init_client(self, conn):
+	def init_client(self, conn, char):
 		conn_sock = conn[0]
-		data = ",".join(["INIT", world.get_width(), world.get_height(), char])
+		width_height = self.world.get_width_height()
+		data = ",".join(["INIT", \
+			str(width_height[0]), \
+			str(width_height[1]), \
+			char])
 		conn_sock.send(data)
