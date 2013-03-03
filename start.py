@@ -8,23 +8,45 @@ import Client
 
 
 def start_server(port):
-	server = Server.Server(port)
+	print "Starting server. Listening on port " + port + "."
+	#server = Server.Server(port)
 
 
-def start_client(port):
-	chars = ["o", "+", ".", "=", "#", "&"]
-	char = chars[floor(random.random * len(chars))]
-	client = Client.Client(port, char)
+def start_client(address):
+	print "Starting client. Connecting to " + address + "."
+	#client = Client.Client(address)
+
+
+def print_usage():
+	print "Usage: start server port"
+	print "       start client host port"
 
 
 if __name__ == '__main__':
-	if len(sys.argv) < 3:
-		print "Usage: start server|client port"
-	action = sys.argv[1]
-	port = sys.argv[2]
-	if action == 'server':
-		start_server(port)
-	if action == 'client':
-		start_client(port)
-	else
-		print "Unknown action"
+	if len(sys.argv) < 2:
+		action = "usage"
+	elif sys.argv[1] == "server":
+		action = "server"
+	elif sys.argv[1] == "client":
+		action = "client"
+	else:
+		print "Unknown action `" + sys.argv[1] + "'."
+		action = "usage"
+
+	if action == "server":
+		if len(sys.argv) < 3:
+			print "No port given"
+			action = "usage"
+		else:
+			port = sys.argv[2]
+			start_server(port)
+	elif action == "client":
+		if len(sys.argv < 4):
+			print "No host or port given"
+			action = "usage"
+		else:
+			host = sys.argv[2]
+			poty = sys.argv[3]
+			start_client((host, port))
+	if action == "usage":
+		print_usage()
