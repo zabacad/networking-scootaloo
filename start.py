@@ -8,12 +8,15 @@ import Client
 
 
 def start_server(port):
-	print "Starting server. Listening on port " + port + "."
-	#server = Server.Server(port)
+	server = Server.Server(port)
+	print "Starting server. Listening on port " + str(port) + "."
+	server.serve()
+	print "Stopped server."
+	del server
 
 
 def start_client(address):
-	print "Starting client. Connecting to " + address + "."
+	print "Starting client. Connecting to " + str(address) + "."
 	#client = Client.Client(address)
 
 
@@ -38,7 +41,7 @@ if __name__ == '__main__':
 			print "No port given"
 			action = "usage"
 		else:
-			port = sys.argv[2]
+			port = int(sys.argv[2])
 			start_server(port)
 	elif action == "client":
 		if len(sys.argv < 4):
@@ -46,7 +49,7 @@ if __name__ == '__main__':
 			action = "usage"
 		else:
 			host = sys.argv[2]
-			poty = sys.argv[3]
+			port = int(sys.argv[3])
 			start_client((host, port))
 	if action == "usage":
 		print_usage()
