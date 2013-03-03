@@ -16,8 +16,9 @@ def start_server(port):
 
 
 def start_client(host, port):
-	print "Starting client. Connecting to " + str(host) + ":" + str(port) + "."
 	client = Client.Client(host, port)
+	print "Starting client. Connecting to " + str(host) + ":" + str(port) + "."
+	client.scan()
 	print "Stopped client."
 	del client
 

@@ -14,19 +14,19 @@ class Client:
 		self.s.close()
 
 	def scan(self):
-		running = true
+		running = True
 		while running:
 			try:
 				data = self.s.recv(1024)
 				items = data.split(",")
-				if item[0] == "INIT":
-					self.set_width_height(self, item[1], item[2])
-					self.set_char(self, item[3])
-					print "initialized!"
+				if items[0] == "INIT":
+					self.set_width_height(items[1], items[2])
+					self.set_char(items[3])
+					print "Initialized!"
 				else:
 					print data
 			except KeyboardInterrupt:
-				running = false
+				running = False
 		self.s.close()
 
 	def send(self, message):
