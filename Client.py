@@ -9,7 +9,7 @@ class Client:
 		self.addr = (host, port)
 		self.s = socket.socket()
 		self.s.connect(self.addr)
-	
+
 	def __del__(self):
 		self.s.close()
 
@@ -28,22 +28,22 @@ class Client:
 			except KeyboardInterrupt:
 				running = false
 		self.s.close()
-		
+
 	def send(self, message):
 		self.s.send(message)
-	
+
 	def set_width_height(self, w, h):
 		self.width = w
 		self.height = h
-	
+
 	def get_width(self):
 		return self.width
-	
+
 	def get_height(self):
 		return self.height
-	
+
 	def set_char(self, char):
 		self.char = char
-	
+
 	def get_char(self):
 		return self.char
