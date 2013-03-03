@@ -13,6 +13,7 @@ class Server:
 		self.connections = []
 
 		self.world = World.World(8, 8)
+		self.chars = ["0", "1", "2", "3", "4", "5", "6", "7"]
 
 	def __del__(self):
 		for conn in self.connections:
@@ -28,7 +29,8 @@ class Server:
 					conn = self.s.accept()
 					self.connections.append(conn)
 					print "Opened connection"
-					self.init_client(conn)
+					char = self.chars[len(self.connections - 1)]
+					self.init_client(conn, char)
 				except socket.error:
 					pass
 
@@ -51,4 +53,6 @@ class Server:
 			"Closed connection (server stop)"
 
 	def init_client(self, conn):
-		pass
+		conn_sock = conn[0]
+		data = ",".join(["INIT", world.get_width(), world.get_height(), char])
+		conn_sock.send(data)
