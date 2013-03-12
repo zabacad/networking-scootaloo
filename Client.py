@@ -9,6 +9,7 @@ class Client:
 		self.addr = (host, port)
 		self.s = socket.socket()
 		self.s.connect(self.addr)
+		self.s.setblocking(0)
 
 	def __del__(self):
 		self.s.close()
@@ -17,14 +18,17 @@ class Client:
 		running = True
 		while running:
 			try:
-				data = self.s.recv(1024)
-				items = data.split(",")
-				if items[0] == "INIT":
-					self.init_world(int(items[1]), int(items[2]))
-					self.set_char(items[3])
-					print "Initialized!"
-				else:
-					print data
+				try:
+					data = self.s.recv(1024)
+					items = data.split(",")
+					if items[0] == "INIT":
+						self.init_world(int(items[1]), int(items[2]))
+						self.set_char(items[3])
+						print "Initialized!"
+					else:
+						print data
+				except socket.error:
+					pass
 			except KeyboardInterrupt:
 				running = False
 		self.s.close()
