@@ -25,13 +25,17 @@ class Client:
 						print "Closed connection (server stop)."
 						self.s.close()
 						break
-					items = data.split(",")
-					if items[0] == "INIT":
-						self.init_world(int(items[1]), int(items[2]))
-						self.set_char(items[3])
-						print "Initialized! Char is `" + self.get_char() + "'."
-					else:
-						print "Message: " + data
+					messages = data.split(";")
+					for message in messages:
+						items = message.split(",")
+						if len(message) == 0:
+							continue
+						elif items[0] == "INIT":
+							self.init_world(int(items[1]), int(items[2]))
+							self.set_char(items[3])
+							print "Initialized! Char is `" + self.get_char() + "'."
+						else:
+							print "Message: " + message
 				except socket.timeout:
 					pass
 			except KeyboardInterrupt:

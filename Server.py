@@ -32,6 +32,7 @@ class Server:
 					print "Opened connection. Now at " + str(len(self.connections)) + " connections."
 					char = self.chars[len(self.connections) - 1]
 					self.init_client(conn, char)
+					self.update_client(conn)
 				except socket.timeout:
 					pass
 
@@ -53,9 +54,15 @@ class Server:
 
 	def init_client(self, conn, char):
 		conn_sock = conn[0]
+		data = ["INIT"]
 		width_height = self.world.get_width_height()
-		data = ",".join(["INIT", \
-			str(width_height[0]), \
-			str(width_height[1]), \
-			char])
-		conn_sock.send(data)
+		data += [str(width_height[0]), str(width_height[1]), char]
+		message = ",".join(data)
+		conn_sock.send(message + ";")
+
+	def update_client(self, conn):
+		conn_sock = conn[0]
+		data = ["WORLD"]
+		data += self.world.get_list()
+		message = ",".join(data)
+		conn_sock.send(message + ";")

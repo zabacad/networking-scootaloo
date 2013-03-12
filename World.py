@@ -20,6 +20,9 @@ class World:
 	def get(self, x, y):
 		return self.world[y][x]
 
+	def get_list(self):
+		return [item for sublist in self.world for item in sublist]
+
 	def set(self, x, y, char):
 		self.world[y][x] = char
 
