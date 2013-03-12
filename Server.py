@@ -8,7 +8,7 @@ class Server:
 	def __init__(self, port):
 		self.addr = ('', port)
 		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.s.setblocking(0)
+		self.s.settimeout(1.0)
 		self.s.bind(self.addr)
 		self.connections = []
 
@@ -19,7 +19,7 @@ class Server:
 		for conn in self.connections:
 			conn_sock = conn[0]
 			conn_sock.close()
-			"Closed connection (server stop)."
+		print "Closed all connections (server stop)."
 
 	def serve(self):
 		running = True
@@ -32,7 +32,7 @@ class Server:
 					print "Opened connection. Now at " + str(len(self.connections)) + " connections."
 					char = self.chars[len(self.connections) - 1]
 					self.init_client(conn, char)
-				except socket.error:
+				except socket.timeout:
 					pass
 
 				for conn in self.connections:
@@ -42,17 +42,14 @@ class Server:
 						if len(data) == 0:
 							conn_sock.close()
 							self.connections.remove(conn)
-							print "Closed connection (client d/c)."
+							print "Closed connection (client d/c). Now at " + str(len(self.connections)) + " connections."
 						else:
 							print data
 					except:
 						pass
 			except KeyboardInterrupt:
 				running = False
-		for conn in self.connections:
-			conn_sock = conn[0]
-			conn_sock.close()
-			print "Closed connection (server stop)."
+		del(self)
 
 	def init_client(self, conn, char):
 		conn_sock = conn[0]

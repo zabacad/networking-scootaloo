@@ -9,7 +9,7 @@ class Client:
 		self.addr = (host, port)
 		self.s = socket.socket()
 		self.s.connect(self.addr)
-		self.s.setblocking(0)
+		self.s.settimeout(1.0)
 
 	def __del__(self):
 		self.s.close()
@@ -32,11 +32,11 @@ class Client:
 						print "Initialized! Char is `" + self.get_char() + "'."
 					else:
 						print "Message: " + data
-				except socket.error:
+				except socket.timeout:
 					pass
 			except KeyboardInterrupt:
 				running = False
-		self.s.close()
+		del(self)
 
 	def send(self, message):
 		self.s.send(message)
