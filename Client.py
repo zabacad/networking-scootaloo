@@ -22,7 +22,7 @@ class Client:
 					data = self.s.recv(1024)
 					if len(data) == 0:
 						running = False
-						print "Closed connection (server stop)"
+						print "Closed connection (server stop)."
 						self.s.close()
 						break
 					items = data.split(",")

@@ -19,7 +19,7 @@ class Server:
 		for conn in self.connections:
 			conn_sock = conn[0]
 			conn_sock.close()
-			"Closed connection (server stop)"
+			"Closed connection (server stop)."
 
 	def serve(self):
 		running = True
@@ -29,7 +29,7 @@ class Server:
 					self.s.listen(1)
 					conn = self.s.accept()
 					self.connections.append(conn)
-					print "Opened connection"
+					print "Opened connection. Now at " + str(len(self.connections)) + " connections."
 					char = self.chars[len(self.connections) - 1]
 					self.init_client(conn, char)
 				except socket.error:
@@ -42,7 +42,7 @@ class Server:
 						if len(data) == 0:
 							conn_sock.close()
 							self.connections.remove(conn)
-							print "Closed connection (client d/c)"
+							print "Closed connection (client d/c)."
 						else:
 							print data
 					except:
@@ -52,7 +52,7 @@ class Server:
 		for conn in self.connections:
 			conn_sock = conn[0]
 			conn_sock.close()
-			print "Closed connection (server stop)"
+			print "Closed connection (server stop)."
 
 	def init_client(self, conn, char):
 		conn_sock = conn[0]
