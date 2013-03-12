@@ -20,13 +20,18 @@ class Client:
 			try:
 				try:
 					data = self.s.recv(1024)
+					if len(data) == 0:
+						running = False
+						print "Closed connection (server stop)"
+						self.s.close()
+						break
 					items = data.split(",")
 					if items[0] == "INIT":
 						self.init_world(int(items[1]), int(items[2]))
 						self.set_char(items[3])
-						print "Initialized!"
+						print "Initialized! Char is `" + self.get_char() + "'."
 					else:
-						print data
+						print "Message: " + data
 				except socket.error:
 					pass
 			except KeyboardInterrupt:
